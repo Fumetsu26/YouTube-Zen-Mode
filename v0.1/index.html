@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube Zen Mode</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>YouTube Zen Mode</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h2>Enter a YouTube Video URL:</h2>
+        <div class="form-wrapper">
+          <form class="form-wrapper">
+            <input
+              type="text"
+              name="video-url"
+              id="video-url"
+              placeholder="https://www.youtube.com/watch?v=..."
+            />
+            <button type="submit" class="form-submit">Submit</button>
+          </form>
+        </div>
+      </section>
+      <section>
+        <h2>Video Player:</h2>
+        <div id="player"></div>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2023 YouTube Zen Mode</p>
+    </footer>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
