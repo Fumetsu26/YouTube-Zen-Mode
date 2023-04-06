@@ -1,42 +1,53 @@
-// YouTube API script
-let player;
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player("player", {
-    height: "360",
-    width: "640",
-    videoId: "",
-    events: {
-      onReady: onPlayerReady,
-      onStateChange: onPlayerStateChange,
-    },
-  });
-}
+// Set up API variables
+const apiKey = "AIzaSyCRTXLeGUJ06Ee7umEI5uh5ByHoN5N6KrM";
+const playlistUrl =
+  "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=";
+const videoUrl = "https://www.youtube.com/watch?v=";
 
-function onPlayerReady(event) {
-  event.target.playVideo();
-}
+// Get the playlist element
+const playlist = document.querySelector(".playlist");
 
-function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 6000);
-    done = true;
-  }
-}
+// Get the video player element
+const videoPlayer = document.getElementById("video-player");
 
-function stopVideo() {
-  player.stopVideo();
-}
+// Get the playlist ID from the user input
+const playlistId = "YOUR_PLAYLIST_ID"; // Replace with the user input
 
-// Get the video URL from the form input
-const form = document.querySelector("form");
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-  const input = document.querySelector("#video-url");
-  const videoUrl = input.value;
+// Construct the API request URL
+const requestUrl = `${playlistUrl}${playlistId}&key=${apiKey}`;
 
-  // Extract the video ID from the URL
-  const videoId = videoUrl.match(/(?<=v=)[^&]+/)[0];
+// Send the API request
+fetch(requestUrl)
+  .then((response) => response.json())
+  .then((data) => {
+    // Parse the JSON response and extract the video IDs and titles
+    const videos = data.items.map((item) => ({
+      id: item.snippet.resourceId.videoId,
+      title: item.snippet.title,
+    }));
 
-  // Load the video in the player
-  player.loadVideoById(videoId);
-});
+    // Create a list of links or thumbnails for the videos
+    const playlistItems = videos
+      .map(
+        (video) => `
+      <li>
+        <a href="#" data-video-id="${video.id}">${video.title}</a>
+      </li>
+    `
+      )
+      .join("");
+
+    // Add the playlist items to the DOM
+    playlist.innerHTML = playlistItems;
+
+    // Add event listeners to the playlist links
+    const playlistLinks = playlist.querySelectorAll("a");
+    playlistLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        const videoId = link.dataset.videoId;
+        videoPlayer.src = `${videoUrl}${videoId}`;
+      });
+    });
+  })
+  .catch((error) => console.error(error));
