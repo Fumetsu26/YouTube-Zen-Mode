@@ -1,5 +1,6 @@
 // YouTube API script
 let player;
+let shouldPlay = false;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("player", {
     height: "360",
@@ -13,22 +14,19 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerReady(event) {
-  event.target.playVideo();
-}
-
-function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 6000);
-    done = true;
+  document.getElementById("player").style.display = "none";
+  if (shouldPlay) {
+    event.target.playVideo();
   }
 }
-
-function stopVideo() {
-  player.stopVideo();
+function onPlayerStateChange(event) {
+  document.getElementById("player").style.display = "block";
 }
 
 // Get the video URL from the form input
 const form = document.querySelector("form");
+const playerDiv = document.querySelector("#player");
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   const input = document.querySelector("#video-url");
@@ -39,4 +37,9 @@ form.addEventListener("submit", function (event) {
 
   // Load the video in the player
   player.loadVideoById(videoId);
+
+  // Show the player
+  playerDiv.style.display = "block";
+
+  shouldPlay = true;
 });
