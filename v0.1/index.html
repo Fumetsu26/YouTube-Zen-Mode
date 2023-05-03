@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+  <div class="header">
     <header>
       <h1>YouTube Zen Mode</h1>
     </header>
+  </div>
     <main>
       <section>
         <h2 class="heading">Enter a YouTube Video URL:</h2>
@@ -27,12 +29,13 @@
           </form>
         </div>
       </section>
-      <section>
-        <div id="player"></div>
-      </section>
-      
-      <ul id="video-list"></ul>
     </main>
+    <section>
+      <div id="player"></div>
+    </section>
+    <div class="sidebar">
+      <ul id="video-list"></ul>
+    </div>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="main.js"></script>
   </body>

@@ -3,9 +3,15 @@ let player;
 let shouldPlay = false;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("player", {
-    height: "360",
-    width: "640",
+    height: "600em",
+    width: "80%",
     videoId: "",
+    playerVars: {
+      rel: 0,
+      showinfo: 0,
+      modestbranding: 1,
+      iv_load_policy: 3
+    },
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange,
@@ -40,7 +46,7 @@ form.addEventListener("submit", function (event) {
     var apiKey = 'AIzaSyCRTXLeGUJ06Ee7umEI5uh5ByHoN5N6KrM';
 
     // Define the API endpoint URL.
-    var apiUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' + playlistId + '&key=' + apiKey;
+    var apiUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=200&playlistId=' + playlistId + '&key=' + apiKey;
     
     if (playlistId != null) {
       fetch(apiUrl)
